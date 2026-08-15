@@ -1,0 +1,1 @@
+word_list =  ["camello", "tigre", "leon", "ardilla", "perro", "murcielago", "maderfaker", "teclado", "sillon", "television", "pared"]

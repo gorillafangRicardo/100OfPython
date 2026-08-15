@@ -1,8 +1,41 @@
 import random
+import hangman_words
 
-word_list =  ["camello", "tigre", "leon", "ardilla", "perro", "murcielago"]
+hangman = [r'''  +---+
+  O   |
+ /|\  |
+ / \  |
+     ===
+''',r'''  +---+
+  O   |
+ /|\  |
+ /    |
+     ===
+''',r'''  +---+
+  O   |
+ /|\  |
+      |
+     ===
+''',r'''  +---+
+  O   |
+ /|   |
+      |
+     ===
+''',r'''  +---+
+  O   |
 
-choosen_word = random.choice(word_list)
+  |   |
+      |
+     ===
+''',r'''  +---+
+      |
+      |
+      |
+     ===
+''']
+
+
+choosen_word = random.choice(hangman_words.word_list)
 
 print(choosen_word)
 
@@ -15,17 +48,59 @@ for letter in choosen_word:
 print(placeholder)
 
 #ask the user to guess a letter and assing their answer to a variable called guess. Make guess lowercase
-guess = input("Guess a letter broder: ").lower()
 
-mod_place = []
+you_win = False
 
-for letter in choosen_word:
-    if guess == letter:
-        mod_place.append(letter)
-    else:
-        mod_place.append("_")
+#crear una funcion que hace un overwrite a el placeholder con las letras correctas
+
+correct_letters = []  
+
+total_lives = 6
 
 
-render = ''.join(mod_place)
+while not you_win:
 
-print(render)
+
+    mod_place = []
+
+
+    guess = input("Guess a letter broder: ").lower()
+
+    
+
+    for letter in choosen_word:
+        if guess == letter:
+            mod_place.append(letter)
+            correct_letters.append(guess)
+
+        elif letter in correct_letters:
+            mod_place += letter
+       
+        else:
+            mod_place.append("_")
+
+            
+    if guess not in choosen_word:
+        total_lives -= 1
+        print(hangman[total_lives])
+        print(f"{guess} IS NOT IN WORD!")
+        
+    if guess in mod_place:
+        print(f"YOU ALREADY GUESSED {guess}")
+
+
+
+    render = ''.join(mod_place)
+
+    print(render)
+
+
+
+    if not "_" in mod_place:
+        you_win = True
+        print("you win")
+    elif total_lives == 0:
+        you_win = False
+        print("You lose!")
+        print(f"The word was '{choosen_word}'")
+        break
