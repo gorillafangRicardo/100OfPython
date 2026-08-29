@@ -1,6 +1,5 @@
 import random
 
-win = False
 #imprimir dos numero random de esa lista y que sean del usuario
 
 #imprimir generar dos numeros random de esa lista y solo imprimir uno
@@ -21,9 +20,6 @@ print(f"This is the dealers card: {m_num1}")
 print(f"These are your cards: {u_num1} {u_num2}")
 
 
-#checar si haz ganado
-#checar si el dealer gana
-#checar si es un empate
 
 m_result = m_num1 + m_num2
 u_result = u_num1 + u_num2
@@ -31,32 +27,38 @@ u_result = u_num1 + u_num2
 #hacer que haya opcion de pedir otra carta
 #sumar esa carta a lo que ya tienes
 
-choice = input("Hit card or stand?: ").lower()
+def check_result():
+
+    end_game = False
+
+    while end_game == False:
+        if u_result == 21:
+            print(f"Player win with {u_result}")
+            end_game = True
+        elif m_result == 21:
+            print(f"Player lose against the machine!")
+            end_game = True
+        elif m_result > u_result and m_result < 21:
+            print(f"The machine wins!!")
+            end_game = True
 
 
-while not win:        
-    if m_result == 21:
-        print("The dealer wins")
-        win == True
-    elif u_result == 21:
-        print("You win!")
-        win == True
-    elif u_result == m_result:
-        print("Its a draw")
-        win == True
-    elif m_result > 21:
-        print(f"The dealer got {m_result} you win!")
-        win == True
-    elif u_result > 21:
-        print(f"You got {u_result} you lose!")
-        win == True
-    else:
-        print("I think you  got a do something about it")
-        print(f"the dealers cards were: {m_num1} and {m_num2}")
-        win == True
+
+stand = False
+
+
+while stand == False:
+
+    choice = input("Hit card or stand?: ").lower()
 
     if choice == "hit":
-        u_result += random.choice(deck)
-        print(m_result)
+        u_result = u_result + random.choice(deck)
+        print(u_result)
+        if u_result > 21:
+            print("You lost!")
+            break            
     else:
-        print("You stand")
+        print(f"You stand with {u_result}")
+        check_result()
+        stand = True
+
